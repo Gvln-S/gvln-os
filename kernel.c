@@ -4,12 +4,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
-
-// Check if the compiler thinks you are targeting the wrong operating system.
+// Gvln-S - only useful for test
+// Check if the compiler thinks you are targeting the wrong operating system. 
 // #if defined(__linux__)
 // #error "you are not using a cross-compiler"
 // #endif
-
 // this os will only work for 32-bit
 // #if !defined(__i386__)
 // #error "you need a ix86-elf compiler"
