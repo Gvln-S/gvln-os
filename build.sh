@@ -11,4 +11,5 @@ cp ./output/gvln-os isodir/boot/gvln-os
 cp grub.cfg isodir/boot/grub/grub.cfg
 grub-mkrescue -o ./output/gvln-os.iso isodir
 
-rm -rf isodir
+rm -rf isodir # delete ./isodir/ for next call to .sh
+

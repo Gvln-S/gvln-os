@@ -1,14 +1,48 @@
+/*
+; Gvln-S - Infinite loop (e9 fd ff)
+loop:
+  jmp loop 
+
+; Fill with 510 zeros minus the size of the previous code
+times 510-($-$$) db 0
+; Magic number
+dw 0xaa55 
+*/
+
+/*
+Gvln-S - boot sect simple: the boot sector must be placed in a known, standard location.
+That location is the first sector of the disk (cylinder 0, head 0, sector 0) and it 
+takes 512 bytes.
+
+To make sure that the "disk is bootable", the BIOS checks that bytes 511 and 512 of the 
+alleged boot sector are bytes 0xAA55:
+
+e9 fd ff 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[ 29 more lines with sixteen zero-bytes each ]
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 55 aa
+
+It is basically all zeros, ending with the 16-bit value 0xAA55. The first three bytes 
+perform an infinite jump 
+*/
+
 .set ALIGN,    1<<0             /* align loaded modules on page boundaries */
 .set MEMINFO,  1<<1             /* provide memory map */
 .set FLAGS,    ALIGN | MEMINFO  /* multiboot 'flag' field */
-.set MAGIC,    0x1BADB002       /* 'magic number' lets bootloader find the header */
+/* .set MAGIC,    0x1BADB002       magic number' lets bootloader find the header - Gvln-S Multiboot1
+                                   Multiboot-Compliant report themselves to 'magic number' 0x2BADB002 */
+ .set MAGIC,    0xE85250D6      /* Gvln-S Multiboot2
+                                   Multiboot2-Compliant report themselves to 'magic number' 0x36D76289 */
 .set CHECKSUM, -(MAGIC + FLAGS) /* checksum of above, to prove we are multiboot */
 
 /* declare a multiboot header that marks the program as a kernel. These are magic
 values that are documented in the multiboot standard. The bootloader will
 search for this signature in the first 8 KiB of the kernel file, aligned at a
 32-bit boundary. */
+
 .section .multiboot
+/* .align 8 Gvln-S - Multiboot2 */
+/* TODO: fix Multiboot2 */
 .align 4
 .long MAGIC
 .long FLAGS
