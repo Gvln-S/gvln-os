@@ -1,4 +1,4 @@
-# Gvln-OS
+# [Gvln-OS](https://github.com/Gvln-S/Gvln-OS)
 
 A minimalist 32-bit operating system kernel developed as a learning project to explore low-level software-hardware interaction and kernel fundamentals.
 
